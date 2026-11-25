@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CareerBot RH</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE  work tool, calm and precise
+   IDEA   an HR help desk: you ask, it answers and hands you the policy page it used
+   PICTURE the live answer card with its cited sources, drawn large under the question
+   COLOUR navy band, white panels, gold for citations and the best score; night = deep navy
+   TYPE   Sora + Inter
+   LAYOUT laptop: question + answer left, sources right; phone: stacked */
+:root{color-scheme:light dark;--bg:light-dark(#FCF9F8,#1c0c0e);--panel:light-dark(#ffffff,#2a1416);--ink:light-dark(#2A1416,#f6eaea);--soft:light-dark(#5E4547,#c9aeb0);--line:light-dark(#EAD6D4,#4a2a2d);--navy:#8E1B24;--gold:#C62F37;--goldlt:light-dark(#FBE5E5,#3a1a1c)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:Sora,Inter,sans-serif;letter-spacing:-.02em;margin:0}
+.top{background:var(--navy);color:#fff;padding:22px max(5vw,16px) 26px}
+.wrap{max-width:1180px;margin:0 auto}
+.top h1{font-size:clamp(28px,3.6vw,40px)}
+.top p{color:#F6DCDD;margin:6px 0 0;max-width:70ch}
+.ask{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.ask input{flex:1;min-width:220px;font:16px Inter,sans-serif;padding:13px 16px;border-radius:12px;border:0;color:#141a33;background:#fff}
+.ask input:focus-visible{outline:3px solid #F6DCDD}
+.ask button{min-height:48px;padding:0 22px;border-radius:12px;border:0;background:#FCF9F8;color:#8E1B24;font:600 16px Inter,sans-serif;cursor:pointer}
+.ask button:hover,.ask button:focus-visible{filter:brightness(1.08);outline:2px solid #fff;outline-offset:2px}
+.ex{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.ex button{border:1px solid rgba(255,255,255,.35);background:transparent;color:#fff;border-radius:999px;padding:8px 14px;font:14px Inter,sans-serif;cursor:pointer;min-height:40px}
+.ex button:hover,.ex button:focus-visible{background:rgba(255,255,255,.12);outline:none}
+main{padding:24px max(5vw,16px) 40px}
+.grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:20px;align-items:start}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px}
+.lab{font-size:13px;color:var(--soft);font-weight:600}
+.q{font-family:Sora,sans-serif;font-size:20px;margin:6px 0 14px}
+.ans{font-size:17px}
+.ans sup{color:var(--gold);font-weight:700;font-size:13px;margin-left:2px}
+.ans.no{color:var(--soft);font-style:italic}
+.meta{font-size:13px;color:var(--soft);margin-top:14px}
+.src{display:grid;gap:12px}
+.s{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--panel)}
+.s.best{border-color:var(--gold);background:var(--goldlt)}
+.s .h{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.s b{font-size:15px}
+.s .n{color:var(--gold);font-weight:700;margin-right:6px}
+.s .sc{font-size:13px;color:var(--soft);white-space:nowrap}
+.s p{margin:6px 0 0;font-size:15px;color:var(--soft)}
+.bar{height:6px;border-radius:3px;background:var(--line);margin-top:10px;overflow:hidden}
+.bar div{height:100%;background:var(--navy)}
+:root[data-theme=dark] .bar div{background:#e39a9f}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .bar div{background:#e39a9f}}
+.eval{margin-top:20px}
+.eval h2{font-size:22px}
+.eval .sub{color:var(--soft);font-size:15px;margin:4px 0 16px}
+.rows{display:grid;gap:10px}
+.row{display:grid;grid-template-columns:minmax(0,13em) minmax(0,1fr) 3.4em;gap:12px;align-items:center;font-size:15px}
+.row .t{height:18px;background:var(--line);border-radius:9px;overflow:hidden}
+.row .t div{height:100%;background:#D9A3A6;border-radius:9px}
+.row.top3 .t div{background:var(--gold)}
+.row b{text-align:right;white-space:nowrap}
+.note{font-size:13px;color:var(--soft);margin-top:14px}
+@media(max-width:820px){.grid{grid-template-columns:minmax(0,1fr)}.row{grid-template-columns:minmax(0,1fr) 3.4em}.row .t{grid-column:1/-1;order:3}}
+@media(prefers-reduced-motion:no-preference){.card,.s{animation:in .35s ease-out both}}
+@keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <h1>CareerBot RH</h1>
+  <p>Posez une question RH : l'assistant retrouve les passages utiles dans les 16 documents RH du Groupe Orvane (entreprise fictive), puis une IA générative rédige la réponse en citant ses sources.</p>
+  <form class="ask" id="f"><input id="qi" aria-label="Votre question" autocomplete="off" placeholder="Ex. : combien de jours de congé pour mon mariage ?"><button type="submit">Demander</button></form>
+  <div class="ex" id="ex"></div>
+</div></header>
+<main><div class="wrap">
+  <div class="grid">
+    <section class="card" aria-live="polite"><span class="lab">Question</span><div class="q" id="qq"></div><span class="lab">Réponse</span><div class="ans" id="ans"></div><div class="meta" id="meta">Recherche BM25 dans le navigateur.</div></section>
+    <section><span class="lab">Sources utilisées</span><div class="src" id="src" style="margin-top:8px"></div></section>
+  </div>
+  <section class="card eval">
+    <h2>Le bon passage arrive dans le top 3 pour 92 % des questions</h2>
+    <p class="sub">Recall@3 sur 60 questions reformulées comme un collaborateur les poserait, pipeline Python complet.</p>
+    <div class="rows" id="rows"></div>
+    <p class="note">Ici, la recherche tourne en BM25 dans le navigateur et la réponse est rédigée par Claude ; si l'IA n'est pas disponible, la page affiche une réponse extractive. Dense (LSA) est un encodeur local de repli. Avec les embeddings sémantiques multilingual-e5-small, à lancer sur une machine avec accès à Hugging Face, les questions à synonymes (fauteuil / siège, chef / manager) devraient mieux passer.</p>
+  </div>
+</div></main>
+<script>
+{
+const CHUNKS=__CHUNKS__;
+const RESULTS=__RESULTS__;
+const EX=["Combien de jours par semaine puis-je télétravailler ?","Mon manager peut-il être mon mentor ?","Je viens au travail à vélo, ai-je une aide ?","Quel est le plafond pour une nuit d'hôtel à Paris ?","Quelle est la capitale de l'Australie ?"];
+const STOP=new Set("a au aux avec ce ces dans de des du elle en et eux il je la le les leur lui ma mais me même mes moi mon ne nos notre nous on ou par pas pour qu que qui sa se ses son sur ta te tes toi ton tu un une vos votre vous c d j l m n s t y été être est sont ai as avons avez ont suis es quoi quel quelle quels quelles combien comment quand où puis peux peut faut dois doit si plus ça cela faire fait avoir aller va dire demain".split(" "));
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const strip=s=>s.normalize("NFD").replace(/[̀-ͯ]/g,"");
+const stem=w=>{for(const suf of["issements","issement","ations","ation","ements","ement","ments","ment","ances","ance","euses","euse","eurs","eur","ités","ité","ives","ive","ifs","if","aux","al","ées","ée","és","er","ez","es","e","s"]){if(w.length-suf.length>=4&&w.endsWith(suf))return w.slice(0,-suf.length)}return w};
+const tok=t=>(t.toLowerCase().replace(/’/g,"'").match(/[a-zà-ÿ0-9]+/g)||[]).filter(w=>!STOP.has(w)&&w.length>1).map(w=>strip(stem(w)));
+const docs=CHUNKS.map(c=>tok(c.title+" "+c.section+" "+c.text));
+const N=docs.length,avg=docs.reduce((a,d)=>a+d.length,0)/N,df={};
+docs.forEach(d=>new Set(d).forEach(w=>df[w]=(df[w]||0)+1));
+const idf=w=>Math.log(1+(N-(df[w]||0)+.5)/((df[w]||0)+.5));
+const bm25=q=>docs.map(d=>{let s=0;const tf={};d.forEach(w=>tf[w]=(tf[w]||0)+1);for(const w of new Set(q)){const f=tf[w]||0;if(f)s+=idf(w)*f*2.5/(f+1.5*(.25+.75*d.length/avg))}return s});
+function answer(q,hits){
+  const qs=new Set(q);let c=[];
+  hits.forEach((h,i)=>h.c.text.split(/(?<=[.!?])\s+/).forEach(s=>{const sc=[...new Set(tok(s))].filter(w=>qs.has(w)).reduce((a,w)=>a+idf(w),0)-.3*i;c.push({sc,s,i})}));
+  c.sort((a,b)=>b.sc-a.sc);
+  if(!c.length||c[0].sc<1.8||hits[0].score<1.5)return null;
+  const same=c.slice(1).filter(x=>x.i===c[0].i&&x.sc>=.5*c[0].sc).slice(0,1);
+  return[c[0],...same];
+}
+let sample=null,ctrl=null;
+const META_LLM="Recherche BM25 dans le navigateur · réponse rédigée par une IA générative (Claude), uniquement à partir des 3 sources.";
+const META_EXT="Recherche BM25 dans le navigateur · réponse extractive : les phrases viennent mot pour mot des documents.";
+const NOANS="Je ne trouve pas cette information dans les documents RH. Contactez l'équipe People Experience.";
+const cite=t=>esc(t).replace(/\[(\d)\]/g,'<sup>[$1]</sup>');
+function prompt(text,hits){
+  return "Tu es CareerBot, l'assistant RH du Groupe Orvane.\nRéponds à la question en français, en 2 à 4 phrases claires, uniquement à partir des extraits ci-dessous.\nCite tes sources entre crochets, par exemple [1], juste après l'information qu'elles soutiennent.\nN'invente rien. Si les extraits ne contiennent pas la réponse, réponds exactement : « "+NOANS+" »\nRéponds en texte simple, sans titre ni liste.\n\nExtraits :\n"+hits.map((h,i)=>"["+(i+1)+"] "+h.c.title+" > "+h.c.section+" : "+h.c.text).join("\n")+"\n\nQuestion : "+text;
+}
+async function generate(text,hits,el){
+  if(ctrl)ctrl.abort();ctrl=new AbortController();const my=ctrl;
+  el.className='ans';el.textContent='Rédaction de la réponse…';
+  try{
+    const r=await sample(prompt(text,hits),{signal:my.signal,modelTier:'quick',onText:({text:t})=>{if(my===ctrl&&t&&t!=='Thinking...')el.innerHTML=cite(t)}});
+    if(my!==ctrl)return;
+    el.innerHTML=cite(r.text.trim());
+    if(r.text.includes('Je ne trouve pas'))el.className='ans no';
+  }catch(e){
+    if(my!==ctrl||e.name==='AbortError')return;
+    if(e.code==='not_granted'){sample=null;document.getElementById('meta').textContent=META_EXT;}
+    const a=answer(tok(text),hits);
+    if(a){el.className='ans';el.innerHTML=a.map(x=>esc(x.s)+`<sup>[${x.i+1}]</sup>`).join(' ');}
+    else{el.className='ans no';el.textContent=NOANS;}
+  }
+}
+function run(text){
+  const q=tok(text);const sc=bm25(q);
+  const hits=sc.map((score,i)=>({score,c:CHUNKS[i]})).sort((a,b)=>b.score-a.score).slice(0,3);
+  document.getElementById('qq').textContent=text;
+  const a=answer(q,hits),el=document.getElementById('ans');
+  if(!a&&hits[0].score<1.5){if(ctrl)ctrl.abort();ctrl=null;el.className='ans no';el.textContent=NOANS;}
+  else if(sample){generate(text,hits,el);}
+  else if(a){el.className='ans';el.innerHTML=a.map(x=>esc(x.s)+`<sup>[${x.i+1}]</sup>`).join(' ');}
+  else{el.className='ans no';el.textContent=NOANS;}
+  const mx=hits[0].score||1;
+  document.getElementById('src').innerHTML=hits.map((h,i)=>`<article class="s ${i===0&&a?'best':''}"><div class="h"><b><span class="n">[${i+1}]</span>${esc(h.c.title)} › ${esc(h.c.section)}</b><span class="sc">score ${h.score.toFixed(2)}</span></div><p>${esc(h.c.text)}</p><div class="bar"><div style="width:${Math.max(4,100*h.score/mx)}%"></div></div></article>`).join('');
+}
+document.getElementById('ex').innerHTML=EX.map((e,i)=>`<button type="button" data-i="${i}">${esc(e)}</button>`).join('');
+document.getElementById('ex').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const t=EX[+b.dataset.i];document.getElementById('qi').value=t;run(t)});
+document.getElementById('f').addEventListener('submit',e=>{e.preventDefault();const t=document.getElementById('qi').value.trim();if(t)run(t)});
+const best=Math.max(...RESULTS.map(r=>r["recall@3"]));
+document.getElementById('rows').innerHTML=RESULTS.map(r=>`<div class="row ${r["recall@3"]===best?'top3':''}"><span>${esc(r.retriever)}</span><div class="t"><div style="width:${(r["recall@3"]*100).toFixed(1)}%"></div></div><b>${Math.round(r["recall@3"]*100)} %</b></div>`).join('');
+document.getElementById('meta').textContent=META_EXT;
+document.getElementById('qi').value=EX[0];run(EX[0]);
+if(window.claude&&window.claude.use){window.claude.use('sample').then(s=>{if(!s)return;sample=s;document.getElementById('meta').textContent=META_LLM;}).catch(()=>{});}
+}
+</script>
+</body>
+</html>

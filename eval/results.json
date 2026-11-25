@@ -1,0 +1,464 @@
+{
+  "n_questions": 60,
+  "n_chunks": 55,
+  "results": [
+    {
+      "retriever": "BM25",
+      "key": "bm25",
+      "recall@1": 0.6666666666666666,
+      "recall@3": 0.9,
+      "recall@5": 0.9166666666666666,
+      "mrr@10": 0.7808531746031746
+    },
+    {
+      "retriever": "TF-IDF",
+      "key": "tfidf",
+      "recall@1": 0.7333333333333333,
+      "recall@3": 0.9166666666666666,
+      "recall@5": 0.9333333333333333,
+      "mrr@10": 0.8152777777777778
+    },
+    {
+      "retriever": "Dense (LSA)",
+      "key": "dense",
+      "recall@1": 0.65,
+      "recall@3": 0.8666666666666667,
+      "recall@5": 0.9,
+      "mrr@10": 0.7593518518518518
+    },
+    {
+      "retriever": "Hybride (BM25 + TF-IDF + Dense (LSA))",
+      "key": "hybrid",
+      "recall@1": 0.6833333333333333,
+      "recall@3": 0.9166666666666666,
+      "recall@5": 0.9333333333333333,
+      "mrr@10": 0.7887500000000001
+    }
+  ],
+  "refusal_off_topic": {
+    "refused": 5,
+    "total": 6
+  },
+  "per_question": {
+    "1": {
+      "question": "Combien de jours par semaine je peux bosser de chez moi ?",
+      "bm25": 1,
+      "tfidf": 1,
+      "dense": 1,
+      "hybrid": 1
+    },
+    "2": {
+      "question": "Je travaille en boutique, est-ce que j'ai droit au télétravail ?",
+      "bm25": 1,
+      "tfidf": 1,
+      "dense": 1,
+      "hybrid": 1
+    },
+    "3": {
+      "question": "Est-ce que l'entreprise rembourse ma connexion internet quand je suis à la maison ?",
+      "bm25": 2,
+      "tfidf": 4,
+      "dense": 2,
+      "hybrid": 2
+    },
+    "4": {
+      "question": "Qui paie mon fauteuil de bureau pour travailler à domicile ?",
+      "bm25": 7,
+      "tfidf": 6,
+      "dense": null,
+      "hybrid": 8
+    },
+    "5": {
+      "question": "Mon manager peut-il refuser ma demande de travail à distance sans explication ?",
+      "bm25": 1,
+      "tfidf": 1,
+      "dense": 1,
+      "hybrid": 1
+    },
+    "6": {
+      "question": "Combien de jours de vacances j'accumule chaque mois ?",
+      "bm25": 1,
+      "tfidf": 1,
+      "dense": 2,
+      "hybrid": 1
+    },
+    "7": {
+      "question": "Que deviennent mes jours de RTT non utilisés en fin d'année ?",
+      "bm25": 1,
+      "tfidf": 1,
+      "dense": 1,
+      "hybrid": 1
+    },
+    "8": {
+      "question": "Comment financer un congé sabbatique avec mes jours mis de côté ?",
+      "bm25": 1,
+      "tfidf": 1,
+      "dense": 1,
+      "hybrid": 1
+    },
+    "9": {
+      "question": "Je me marie le mois prochain, ai-je des jours offerts ?",
+      "bm25": 8,
+      "tfidf": 2,
+      "dense": 9,
+      "hybrid": 5
+    },
+    "10": {
+      "question": "Combien de jours d'absence pour la naissance de mon bébé ?",
+      "bm25": 1,
+      "tfidf": 1,
+      "dense": 1,
+      "hybrid": 1
+    },
+    "11": {
+      "question": "Au bout de combien de temps puis-je changer de poste en interne ?",
+      "bm25": 1,
+      "tfidf": 1,
+      "dense": 1,
+      "hybrid": 1
+    },
+    "12": {
+      "question": "Dois-je demander la permission à mon chef pour candidater ailleurs dans le groupe ?",
+      "bm25": null,
+      "tfidf": null,
+      "dense": null,
+      "hybrid": null
+    },
+    "13": {
+      "question": "Est-ce que je garde mon ancienneté si je pars dans une autre entité du groupe ?",
+      "bm25": 2,
+      "tfidf": 3,
+      "dense": 5,
+      "hybrid": 3
+    },
+    "14": {
+      "question": "Qui paie le déménagement si je change de ville pour un nouveau poste ?",
+      "bm25": 3,
+      "tfidf": 2,
+      "dense": 6,
+      "hybrid": 3
+    },
+    "15": {
+      "question": "Les postes ouverts sont-ils d'abord proposés aux salariés ?",
+      "bm25": 2,
+      "tfidf": 3,
+      "dense": 3,
+      "hybrid": 2
+    },
+    "16": {
+      "question": "Peut-on parler à quelqu'un pour préparer un changement de poste ?",
+      "bm25": null,
+      "tfidf": null,
+      "dense": null,
+      "hybrid": null
+    },
+    "17": {
+      "question": "Combien d'argent est versé sur mon CPF chaque année ?",
+      "bm25": 2,
+      "tfidf": 3,
+      "dense": 2,
+      "hybrid": 2
+    },
+    "18": {
+      "question": "Le groupe complète-t-il mon compte formation ?",
+      "bm25": 1,
+      "tfidf": 1,
+      "dense": 1,
+      "hybrid": 1
+    },
+    "19": {
+      "question": "Où trouver des cours en ligne sur l'intelligence artificielle ?",
+      "bm25": 1,
+      "tfidf": 1,
+      "dense": 1,
+      "hybrid": 1
+    },
+    "20": {
+      "question": "Combien d'heures de e-learning puis-je faire sur mon temps de travail ?",
+      "bm25": 1,
+      "tfidf": 1,
+      "dense": 1,
+      "hybrid": 1
+    },
+    "21": {
+      "question": "Est-ce que l'entreprise peut payer mon master ?",
+      "bm25": null,
+      "tfidf": null,
+      "dense": null,
+      "hybrid": null
+    },
+    "22": {
+      "question": "Quand est décidé le programme des formations de l'année ?",
+      "bm25": 1,
+      "tfidf": 1,
+      "dense": 1,
+      "hybrid": 1
+    },
+    "23": {
+      "question": "À quelle période ont lieu les évaluations de fin d'année ?",
+      "bm25": 1,
+      "tfidf": 1,
+      "dense": 2,
+      "hybrid": 1
+    },
+    "24": {
+      "question": "Combien d'objectifs sont fixés pour l'année ?",
+      "bm25": 1,
+      "tfidf": 1,
+      "dense": 1,
+      "hybrid": 1
+    },
+    "25": {
+      "question": "Quelle différence entre l'entretien pro et l'entretien annuel ?",
+      "bm25": 2,
+      "tfidf": 2,
+      "dense": 2,
+      "hybrid": 2
+    },
+    "26": {
+      "question": "Quels sont les niveaux de notation de la performance ?",
+      "bm25": 1,
+      "tfidf": 1,
+      "dense": 1,
+      "hybrid": 1
+    },
+    "27": {
+      "question": "Combien de temps dure le programme d'accueil des nouveaux ?",
+      "bm25": 1,
+      "tfidf": 1,
+      "dense": 1,
+      "hybrid": 1
+    },
+    "28": {
+      "question": "Qui m'aide à comprendre la culture de l'entreprise quand j'arrive ?",
+      "bm25": 1,
+      "tfidf": 1,
+      "dense": 1,
+      "hybrid": 1
+    },
+    "29": {
+      "question": "C'est quoi le rapport d'étonnement ?",
+      "bm25": 1,
+      "tfidf": 1,
+      "dense": 1,
+      "hybrid": 1
+    },
+    "30": {
+      "question": "Quand vais-je recevoir mon ordinateur avant de commencer ?",
+      "bm25": 1,
+      "tfidf": 1,
+      "dense": 1,
+      "hybrid": 1
+    },
+    "31": {
+      "question": "Combien de temps dure un mentorat ?",
+      "bm25": 1,
+      "tfidf": 1,
+      "dense": 1,
+      "hybrid": 1
+    },
+    "32": {
+      "question": "Quand puis-je m'inscrire pour avoir un mentor ?",
+      "bm25": 4,
+      "tfidf": 1,
+      "dense": 4,
+      "hybrid": 3
+    },
+    "33": {
+      "question": "Faut-il beaucoup d'expérience pour accompagner quelqu'un comme mentor ?",
+      "bm25": 2,
+      "tfidf": 3,
+      "dense": 3,
+      "hybrid": 3
+    },
+    "34": {
+      "question": "Mon responsable peut-il être mon mentor ?",
+      "bm25": 1,
+      "tfidf": 1,
+      "dense": 2,
+      "hybrid": 1
+    },
+    "35": {
+      "question": "À quoi sert le programme de mentorat ?",
+      "bm25": 1,
+      "tfidf": 1,
+      "dense": 1,
+      "hybrid": 1
+    },
+    "36": {
+      "question": "Comment rencontrer des collègues d'autres filiales pour échanger sur nos parcours ?",
+      "bm25": 3,
+      "tfidf": 3,
+      "dense": 1,
+      "hybrid": 3
+    },
+    "37": {
+      "question": "Peut-on parler de nos clients pendant un café carrière ?",
+      "bm25": 1,
+      "tfidf": 1,
+      "dense": 1,
+      "hybrid": 1
+    },
+    "38": {
+      "question": "Existe-t-il un groupe pour les jeunes de moins de 30 ans ?",
+      "bm25": 1,
+      "tfidf": 1,
+      "dense": 1,
+      "hybrid": 1
+    },
+    "39": {
+      "question": "À quelle fréquence se retrouvent les communautés d'experts ?",
+      "bm25": 1,
+      "tfidf": 1,
+      "dense": 1,
+      "hybrid": 1
+    },
+    "40": {
+      "question": "Quand mon salaire est-il augmenté ?",
+      "bm25": 2,
+      "tfidf": 1,
+      "dense": 3,
+      "hybrid": 2
+    },
+    "41": {
+      "question": "Quel est le montant maximum de mon bonus de cadre ?",
+      "bm25": 3,
+      "tfidf": 3,
+      "dense": 3,
+      "hybrid": 3
+    },
+    "42": {
+      "question": "Quelle part de la mutuelle est payée par l'employeur ?",
+      "bm25": 1,
+      "tfidf": 1,
+      "dense": 1,
+      "hybrid": 1
+    },
+    "43": {
+      "question": "Je viens au travail à vélo, ai-je une aide ?",
+      "bm25": 1,
+      "tfidf": 1,
+      "dense": 1,
+      "hybrid": 1
+    },
+    "44": {
+      "question": "Quelle réduction ai-je sur les produits de la marque ?",
+      "bm25": 2,
+      "tfidf": 2,
+      "dense": 2,
+      "hybrid": 2
+    },
+    "45": {
+      "question": "Dans quel délai dois-je envoyer mes justificatifs de dépenses ?",
+      "bm25": 1,
+      "tfidf": 1,
+      "dense": 1,
+      "hybrid": 1
+    },
+    "46": {
+      "question": "Quel est le plafond pour une nuit d'hôtel à Paris ?",
+      "bm25": 1,
+      "tfidf": 1,
+      "dense": 1,
+      "hybrid": 1
+    },
+    "47": {
+      "question": "Puis-je prendre l'avion pour un trajet de 3 heures ?",
+      "bm25": 1,
+      "tfidf": 1,
+      "dense": 1,
+      "hybrid": 1
+    },
+    "48": {
+      "question": "Suis-je obligé de répondre aux mails le soir ?",
+      "bm25": 3,
+      "tfidf": 1,
+      "dense": 1,
+      "hybrid": 1
+    },
+    "49": {
+      "question": "À partir de quelle heure ne doit-on plus envoyer d'e-mails ?",
+      "bm25": 1,
+      "tfidf": 1,
+      "dense": 1,
+      "hybrid": 1
+    },
+    "50": {
+      "question": "Combien de temps dure une réunion par défaut ?",
+      "bm25": 1,
+      "tfidf": 1,
+      "dense": 1,
+      "hybrid": 1
+    },
+    "51": {
+      "question": "Mon salaire est-il maintenu pendant mon congé maternité ?",
+      "bm25": 1,
+      "tfidf": 1,
+      "dense": 1,
+      "hybrid": 1
+    },
+    "52": {
+      "question": "Puis-je reprendre à temps partiel après mon congé maternité ?",
+      "bm25": 1,
+      "tfidf": 1,
+      "dense": 1,
+      "hybrid": 1
+    },
+    "53": {
+      "question": "Existe-t-il une aide pour la crèche ?",
+      "bm25": 1,
+      "tfidf": 1,
+      "dense": 1,
+      "hybrid": 1
+    },
+    "54": {
+      "question": "À qui m'adresser pour adapter mon poste à mon handicap ?",
+      "bm25": 2,
+      "tfidf": 2,
+      "dense": 2,
+      "hybrid": 2
+    },
+    "55": {
+      "question": "Combien de jours pour mes démarches RQTH ?",
+      "bm25": 1,
+      "tfidf": 1,
+      "dense": 1,
+      "hybrid": 1
+    },
+    "56": {
+      "question": "Combien de temps mes données sont-elles gardées après mon départ ?",
+      "bm25": 1,
+      "tfidf": 1,
+      "dense": 1,
+      "hybrid": 1
+    },
+    "57": {
+      "question": "Comment demander la suppression de mes données personnelles ?",
+      "bm25": 1,
+      "tfidf": 1,
+      "dense": 1,
+      "hybrid": 1
+    },
+    "58": {
+      "question": "Un fournisseur m'offre un cadeau de 150 euros, puis-je l'accepter ?",
+      "bm25": 1,
+      "tfidf": 1,
+      "dense": 1,
+      "hybrid": 1
+    },
+    "59": {
+      "question": "Quelle est la durée de préavis pour un cadre qui démissionne ?",
+      "bm25": 1,
+      "tfidf": 1,
+      "dense": 1,
+      "hybrid": 1
+    },
+    "60": {
+      "question": "Si je reviens dans le groupe après l'avoir quitté, refais-je une période d'essai ?",
+      "bm25": 2,
+      "tfidf": 1,
+      "dense": 2,
+      "hybrid": 2
+    }
+  }
+}

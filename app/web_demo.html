@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CareerBot RH</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE  work tool, calm and precise
+   IDEA   an HR help desk: you ask, it answers and hands you the policy page it used
+   PICTURE the live answer card with its cited sources, drawn large under the question
+   COLOUR navy band, white panels, gold for citations and the best score; night = deep navy
+   TYPE   Sora + Inter
+   LAYOUT laptop: question + answer left, sources right; phone: stacked */
+:root{color-scheme:light dark;--bg:light-dark(#FCF9F8,#1c0c0e);--panel:light-dark(#ffffff,#2a1416);--ink:light-dark(#2A1416,#f6eaea);--soft:light-dark(#5E4547,#c9aeb0);--line:light-dark(#EAD6D4,#4a2a2d);--navy:#8E1B24;--gold:#C62F37;--goldlt:light-dark(#FBE5E5,#3a1a1c)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:Sora,Inter,sans-serif;letter-spacing:-.02em;margin:0}
+.top{background:var(--navy);color:#fff;padding:22px max(5vw,16px) 26px}
+.wrap{max-width:1180px;margin:0 auto}
+.top h1{font-size:clamp(28px,3.6vw,40px)}
+.top p{color:#F6DCDD;margin:6px 0 0;max-width:70ch}
+.ask{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.ask input{flex:1;min-width:220px;font:16px Inter,sans-serif;padding:13px 16px;border-radius:12px;border:0;color:#141a33;background:#fff}
+.ask input:focus-visible{outline:3px solid #F6DCDD}
+.ask button{min-height:48px;padding:0 22px;border-radius:12px;border:0;background:#FCF9F8;color:#8E1B24;font:600 16px Inter,sans-serif;cursor:pointer}
+.ask button:hover,.ask button:focus-visible{filter:brightness(1.08);outline:2px solid #fff;outline-offset:2px}
+.ex{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.ex button{border:1px solid rgba(255,255,255,.35);background:transparent;color:#fff;border-radius:999px;padding:8px 14px;font:14px Inter,sans-serif;cursor:pointer;min-height:40px}
+.ex button:hover,.ex button:focus-visible{background:rgba(255,255,255,.12);outline:none}
+main{padding:24px max(5vw,16px) 40px}
+.grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:20px;align-items:start}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px}
+.lab{font-size:13px;color:var(--soft);font-weight:600}
+.q{font-family:Sora,sans-serif;font-size:20px;margin:6px 0 14px}
+.ans{font-size:17px}
+.ans sup{color:var(--gold);font-weight:700;font-size:13px;margin-left:2px}
+.ans.no{color:var(--soft);font-style:italic}
+.meta{font-size:13px;color:var(--soft);margin-top:14px}
+.src{display:grid;gap:12px}
+.s{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--panel)}
+.s.best{border-color:var(--gold);background:var(--goldlt)}
+.s .h{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.s b{font-size:15px}
+.s .n{color:var(--gold);font-weight:700;margin-right:6px}
+.s .sc{font-size:13px;color:var(--soft);white-space:nowrap}
+.s p{margin:6px 0 0;font-size:15px;color:var(--soft)}
+.bar{height:6px;border-radius:3px;background:var(--line);margin-top:10px;overflow:hidden}
+.bar div{height:100%;background:var(--navy)}
+:root[data-theme=dark] .bar div{background:#e39a9f}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .bar div{background:#e39a9f}}
+.eval{margin-top:20px}
+.eval h2{font-size:22px}
+.eval .sub{color:var(--soft);font-size:15px;margin:4px 0 16px}
+.rows{display:grid;gap:10px}
+.row{display:grid;grid-template-columns:minmax(0,13em) minmax(0,1fr) 3.4em;gap:12px;align-items:center;font-size:15px}
+.row .t{height:18px;background:var(--line);border-radius:9px;overflow:hidden}
+.row .t div{height:100%;background:#D9A3A6;border-radius:9px}
+.row.top3 .t div{background:var(--gold)}
+.row b{text-align:right;white-space:nowrap}
+.note{font-size:13px;color:var(--soft);margin-top:14px}
+@media(max-width:820px){.grid{grid-template-columns:minmax(0,1fr)}.row{grid-template-columns:minmax(0,1fr) 3.4em}.row .t{grid-column:1/-1;order:3}}
+@media(prefers-reduced-motion:no-preference){.card,.s{animation:in .35s ease-out both}}
+@keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <h1>CareerBot RH</h1>
+  <p>Posez une question RH : l'assistant retrouve les passages utiles dans les 16 documents RH du Groupe Orvane (entreprise fictive), puis une IA générative rédige la réponse en citant ses sources.</p>
+  <form class="ask" id="f"><input id="qi" aria-label="Votre question" autocomplete="off" placeholder="Ex. : combien de jours de congé pour mon mariage ?"><button type="submit">Demander</button></form>
+  <div class="ex" id="ex"></div>
+</div></header>
+<main><div class="wrap">
+  <div class="grid">
+    <section class="card" aria-live="polite"><span class="lab">Question</span><div class="q" id="qq"></div><span class="lab">Réponse</span><div class="ans" id="ans"></div><div class="meta" id="meta">Recherche BM25 dans le navigateur.</div></section>
+    <section><span class="lab">Sources utilisées</span><div class="src" id="src" style="margin-top:8px"></div></section>
+  </div>
+  <section class="card eval">
+    <h2>Le bon passage arrive dans le top 3 pour 92 % des questions</h2>
+    <p class="sub">Recall@3 sur 60 questions reformulées comme un collaborateur les poserait, pipeline Python complet.</p>
+    <div class="rows" id="rows"></div>
+    <p class="note">Ici, la recherche tourne en BM25 dans le navigateur et la réponse est rédigée par Claude ; si l'IA n'est pas disponible, la page affiche une réponse extractive. Dense (LSA) est un encodeur local de repli. Avec les embeddings sémantiques multilingual-e5-small, à lancer sur une machine avec accès à Hugging Face, les questions à synonymes (fauteuil / siège, chef / manager) devraient mieux passer.</p>
+  </div>
+</div></main>
+<script>
+{
+const CHUNKS=[{"id": "01_teletravail#Éligibilité", "title": "Politique de télétravail", "section": "Éligibilité", "text": "Le télétravail est ouvert à tous les collaborateurs en CDI ou en CDD de plus de 6 mois, après la fin de leur période d'essai. Les postes en boutique, en atelier et en logistique ne sont pas éligibles, car ils exigent une présence physique."}, {"id": "01_teletravail#Nombre de jours", "title": "Politique de télétravail", "section": "Nombre de jours", "text": "Chaque collaborateur éligible peut télétravailler jusqu'à 2 jours par semaine. Les jours sont fixés avec le manager et ne sont pas reportables d'une semaine sur l'autre. Une présence sur site est obligatoire le mardi, jour des réunions d'équipe."}, {"id": "01_teletravail#Indemnité", "title": "Politique de télétravail", "section": "Indemnité", "text": "Une indemnité forfaitaire de 30 euros par mois est versée pour couvrir les frais d'internet et d'électricité. Le Groupe prend aussi en charge un écran et un siège ergonomique, à hauteur de 300 euros, une seule fois."}, {"id": "01_teletravail#Demande", "title": "Politique de télétravail", "section": "Demande", "text": "La demande se fait dans l'outil RH MyOrvane, rubrique « Mon organisation ». Le manager a 15 jours pour répondre. Un refus doit être motivé par écrit."}, {"id": "02_conges#Congés payés", "title": "Congés et absences", "section": "Congés payés", "text": "Chaque collaborateur acquiert 2,5 jours ouvrables de congés payés par mois travaillé, soit 30 jours ouvrables par an. La période de prise des congés va du 1er mai au 30 avril de l'année suivante."}, {"id": "02_conges#RTT", "title": "Congés et absences", "section": "RTT", "text": "Les collaborateurs au forfait jours bénéficient de 10 jours de RTT par an. Les RTT non pris au 31 décembre sont perdus, sauf s'ils sont versés sur le compte épargne-temps."}, {"id": "02_conges#Compte épargne-temps", "title": "Congés et absences", "section": "Compte épargne-temps", "text": "Le compte épargne-temps permet de mettre de côté jusqu'à 10 jours par an, dans la limite de 60 jours au total. Les jours épargnés peuvent financer un congé sabbatique ou une formation longue."}, {"id": "02_conges#Absences pour événements familiaux", "title": "Congés et absences", "section": "Absences pour événements familiaux", "text": "Le mariage ou le PACS du collaborateur donne droit à 5 jours d'absence rémunérée. La naissance d'un enfant donne droit à 3 jours, en plus du congé de paternité. Le décès d'un parent proche donne droit à 3 jours."}, {"id": "03_mobilite_interne#Principe", "title": "Mobilité interne", "section": "Principe", "text": "Le Groupe Orvane privilégie la mobilité interne : toute offre est publiée en interne pendant 10 jours avant d'être ouverte aux candidats externes."}, {"id": "03_mobilite_interne#Conditions", "title": "Mobilité interne", "section": "Conditions", "text": "Un collaborateur peut postuler à une mobilité après 18 mois dans son poste actuel. Il n'a pas besoin de l'accord préalable de son manager pour postuler, mais il doit l'informer s'il est retenu pour un entretien."}, {"id": "03_mobilite_interne#Mobilité entre filiales", "title": "Mobilité interne", "section": "Mobilité entre filiales", "text": "Les mobilités entre filiales du Groupe sont possibles en France et à l'international. L'ancienneté acquise est conservée en cas de mobilité entre filiales."}, {"id": "03_mobilite_interne#Accompagnement", "title": "Mobilité interne", "section": "Accompagnement", "text": "Chaque candidat interne peut demander un entretien avec un conseiller carrière de l'équipe People Experience. En cas de mobilité géographique, le Groupe prend en charge les frais de déménagement jusqu'à 5 000 euros et une semaine de congé supplémentaire pour s'installer."}, {"id": "04_formation#Plan de formation", "title": "Formation et développement des compétences", "section": "Plan de formation", "text": "Chaque année, le manager et le collaborateur identifient ensemble les formations utiles lors de l'entretien annuel. Le plan de formation est validé en décembre pour l'année suivante."}, {"id": "04_formation#Compte personnel de formation", "title": "Formation et développement des compétences", "section": "Compte personnel de formation", "text": "Le compte personnel de formation (CPF) est crédité de 500 euros par an pour un salarié à temps plein, dans la limite de 5 000 euros. Le Groupe abonde le CPF de 1 000 euros pour les formations certifiantes liées au métier."}, {"id": "04_formation#Orvane Academy", "title": "Formation et développement des compétences", "section": "Orvane Academy", "text": "L'Orvane Academy propose plus de 200 modules en ligne : management, data, intelligence artificielle, langues et savoir-faire métiers. Les modules sont accessibles gratuitement depuis MyOrvane, sur le temps de travail, dans la limite de 2 heures par semaine."}, {"id": "04_formation#Formations diplômantes", "title": "Formation et développement des compétences", "section": "Formations diplômantes", "text": "Une formation diplômante peut être financée à 100 % si le collaborateur a au moins 2 ans d'ancienneté et s'engage à rester 2 ans dans le Groupe après l'obtention du diplôme."}, {"id": "05_entretien_annuel#Entretien annuel", "title": "Entretien annuel et entretien professionnel", "section": "Entretien annuel", "text": "L'entretien annuel a lieu entre janvier et mars. Il fait le bilan des objectifs de l'année écoulée et fixe 3 à 5 objectifs pour l'année suivante. Le collaborateur prépare l'entretien avec une auto-évaluation dans MyOrvane."}, {"id": "05_entretien_annuel#Entretien professionnel", "title": "Entretien annuel et entretien professionnel", "section": "Entretien professionnel", "text": "L'entretien professionnel est distinct de l'entretien annuel. Il porte sur les perspectives d'évolution et les besoins de formation, et a lieu tous les 2 ans. Tous les 6 ans, il fait un bilan complet du parcours."}, {"id": "05_entretien_annuel#Évaluation", "title": "Entretien annuel et entretien professionnel", "section": "Évaluation", "text": "La performance est évaluée sur 4 niveaux : à développer, conforme, très bon, exceptionnel. Le niveau d'évaluation sert de base à la révision salariale d'avril."}, {"id": "06_onboarding#Avant l'arrivée", "title": "Intégration des nouveaux arrivants", "section": "Avant l'arrivée", "text": "Le nouvel arrivant reçoit son matériel informatique et ses accès une semaine avant son premier jour. Un message de bienvenue de son manager lui présente son équipe et son programme."}, {"id": "06_onboarding#Parcours d'intégration", "title": "Intégration des nouveaux arrivants", "section": "Parcours d'intégration", "text": "Le parcours d'intégration dure 3 mois. Il comprend une journée d'accueil Groupe, des rencontres avec les équipes partenaires et un point d'étape avec le manager à 1 mois puis à 3 mois."}, {"id": "06_onboarding#Parrainage", "title": "Intégration des nouveaux arrivants", "section": "Parrainage", "text": "Chaque nouvel arrivant est accompagné par un parrain ou une marraine d'une autre équipe pendant ses 6 premiers mois. Le parrain répond aux questions pratiques et aide à comprendre la culture du Groupe."}, {"id": "06_onboarding#Rapport d'étonnement", "title": "Intégration des nouveaux arrivants", "section": "Rapport d'étonnement", "text": "À la fin du premier mois, le nouvel arrivant rédige un rapport d'étonnement, partagé avec son manager et l'équipe People Experience, pour améliorer l'accueil des prochains arrivants."}, {"id": "07_mentorat#Objectif", "title": "Programme de mentorat", "section": "Objectif", "text": "Le programme de mentorat met en relation un mentoré et un mentor plus expérimenté d'une autre filiale, pour échanger sur le développement de carrière."}, {"id": "07_mentorat#Durée et rythme", "title": "Programme de mentorat", "section": "Durée et rythme", "text": "Un cycle de mentorat dure 9 mois, avec une rencontre d'une heure par mois, sur site ou en visioconférence. Le mentor et le mentoré signent une charte de confidentialité."}, {"id": "07_mentorat#Inscription", "title": "Programme de mentorat", "section": "Inscription", "text": "Les inscriptions ouvrent deux fois par an, en mars et en septembre, dans MyOrvane. Tout collaborateur ayant au moins 1 an d'ancienneté peut devenir mentoré. Pour devenir mentor, il faut au moins 5 ans d'expérience professionnelle."}, {"id": "07_mentorat#Mise en relation", "title": "Programme de mentorat", "section": "Mise en relation", "text": "L'équipe People Experience propose un binôme à partir des objectifs exprimés par le mentoré. Le mentor ne peut pas être le manager direct ou indirect du mentoré."}, {"id": "08_reseau_interne#Communautés métiers", "title": "Réseaux internes et communautés", "section": "Communautés métiers", "text": "Les communautés métiers rassemblent des collaborateurs de différentes filiales autour d'une même expertise, par exemple la data, le marketing digital ou le retail. Elles se réunissent une fois par trimestre."}, {"id": "08_reseau_interne#Cafés carrière", "title": "Réseaux internes et communautés", "section": "Cafés carrière", "text": "Les cafés carrière sont des échanges virtuels de 30 minutes entre deux collaborateurs de filiales différentes. Ils sont organisés chaque mois sur inscription volontaire. Les sujets portent sur les méthodes et les parcours, jamais sur des informations commerciales."}, {"id": "08_reseau_interne#Réseaux d'affinité", "title": "Réseaux internes et communautés", "section": "Réseaux d'affinité", "text": "Le Groupe soutient plusieurs réseaux d'affinité, dont un réseau de femmes leaders et un réseau des jeunes talents de moins de 30 ans. Chaque réseau dispose d'un budget annuel de 10 000 euros pour ses événements."}, {"id": "09_remuneration#Révision salariale", "title": "Rémunération et avantages", "section": "Révision salariale", "text": "La révision salariale a lieu chaque année en avril. Elle tient compte du niveau d'évaluation de l'entretien annuel et du positionnement du salaire par rapport au marché."}, {"id": "09_remuneration#Rémunération variable", "title": "Rémunération et avantages", "section": "Rémunération variable", "text": "Les cadres bénéficient d'une prime sur objectifs pouvant atteindre 10 % du salaire annuel, versée en mars. Une prime d'intéressement collective est versée à tous les salariés en juin, selon les résultats du Groupe."}, {"id": "09_remuneration#Avantages", "title": "Rémunération et avantages", "section": "Avantages", "text": "Les collaborateurs bénéficient de tickets restaurant d'une valeur de 10 euros, pris en charge à 60 % par l'employeur, d'une mutuelle prise en charge à 70 %, et d'une remise de 30 % sur les produits du Groupe."}, {"id": "09_remuneration#Transport", "title": "Rémunération et avantages", "section": "Transport", "text": "L'abonnement de transport en commun est remboursé à 75 %. Un forfait mobilités durables de 600 euros par an est proposé aux collaborateurs qui viennent à vélo ou en covoiturage."}, {"id": "10_notes_de_frais#Déclaration", "title": "Notes de frais et déplacements", "section": "Déclaration", "text": "Les notes de frais sont déclarées dans MyOrvane avec le justificatif scanné, dans un délai de 30 jours après la dépense. Elles sont remboursées sur la paie du mois suivant."}, {"id": "10_notes_de_frais#Plafonds", "title": "Notes de frais et déplacements", "section": "Plafonds", "text": "Le repas d'affaires est remboursé jusqu'à 35 euros par personne en France. L'hôtel est remboursé jusqu'à 180 euros la nuit à Paris et 120 euros en province."}, {"id": "10_notes_de_frais#Transport professionnel", "title": "Notes de frais et déplacements", "section": "Transport professionnel", "text": "Le train est la règle pour les trajets de moins de 4 heures. L'avion en classe économique est autorisé au-delà. La classe affaires est réservée aux vols de plus de 8 heures."}, {"id": "11_deconnexion#Principe", "title": "Droit à la déconnexion", "section": "Principe", "text": "Chaque collaborateur a le droit de ne pas répondre aux messages professionnels en dehors de ses horaires de travail, le week-end et pendant ses congés."}, {"id": "11_deconnexion#Plages protégées", "title": "Droit à la déconnexion", "section": "Plages protégées", "text": "Aucun e-mail ne doit être envoyé entre 20 h et 8 h, ni le week-end, sauf urgence. Les outils de messagerie proposent l'envoi différé pour respecter ces plages."}, {"id": "11_deconnexion#Réunions", "title": "Droit à la déconnexion", "section": "Réunions", "text": "Les réunions ne commencent pas avant 9 h et ne se terminent pas après 18 h. Une réunion dure 45 minutes au maximum par défaut, pour laisser du temps entre deux rendez-vous."}, {"id": "12_parentalite#Congé maternité et paternité", "title": "Parentalité", "section": "Congé maternité et paternité", "text": "Le Groupe maintient 100 % du salaire pendant le congé maternité et le congé de paternité, au-delà des indemnités de la Sécurité sociale."}, {"id": "12_parentalite#Retour de congé", "title": "Parentalité", "section": "Retour de congé", "text": "Au retour d'un congé maternité ou d'adoption, la collaboratrice ou le collaborateur peut reprendre à temps partiel à 80 % pendant 3 mois, payé à 100 %."}, {"id": "12_parentalite#Garde d'enfants", "title": "Parentalité", "section": "Garde d'enfants", "text": "Le Groupe réserve des places en crèche interentreprises dans les principales villes. Une aide de 50 euros par mois est versée pour la garde d'un enfant de moins de 3 ans lorsqu'aucune place n'est disponible."}, {"id": "13_handicap#Référent handicap", "title": "Handicap et inclusion", "section": "Référent handicap", "text": "Chaque filiale dispose d'un référent handicap, joignable de façon confidentielle depuis MyOrvane."}, {"id": "13_handicap#Aménagements", "title": "Handicap et inclusion", "section": "Aménagements", "text": "Le Groupe finance l'aménagement du poste de travail, du matériel adapté et des horaires aménagés pour les collaborateurs en situation de handicap."}, {"id": "13_handicap#Jours d'absence", "title": "Handicap et inclusion", "section": "Jours d'absence", "text": "Les collaborateurs bénéficiant d'une reconnaissance de travailleur handicapé disposent de 2 jours d'absence rémunérée par an pour leurs démarches médicales et administratives."}, {"id": "14_donnees_personnelles#Données collectées", "title": "Protection des données personnelles des collaborateurs", "section": "Données collectées", "text": "Le Groupe collecte uniquement les données nécessaires à la gestion administrative, à la paie et au développement de carrière. Les données de santé ne sont jamais stockées dans MyOrvane."}, {"id": "14_donnees_personnelles#Durée de conservation", "title": "Protection des données personnelles des collaborateurs", "section": "Durée de conservation", "text": "Les dossiers des collaborateurs sont conservés pendant 5 ans après leur départ. Les candidatures non retenues sont supprimées au bout de 2 ans."}, {"id": "14_donnees_personnelles#Droits", "title": "Protection des données personnelles des collaborateurs", "section": "Droits", "text": "Chaque collaborateur peut demander l'accès, la rectification ou la suppression de ses données en écrivant au délégué à la protection des données (DPO). Une réponse est apportée sous 1 mois."}, {"id": "15_code_conduite#Confidentialité", "title": "Code de conduite", "section": "Confidentialité", "text": "Les informations sur les clients, les prix, les lancements de produits et la stratégie sont confidentielles. Elles ne doivent pas être partagées entre filiales en dehors des canaux prévus."}, {"id": "15_code_conduite#Cadeaux", "title": "Code de conduite", "section": "Cadeaux", "text": "Un collaborateur ne peut pas accepter de cadeau d'une valeur supérieure à 100 euros de la part d'un fournisseur. Tout cadeau doit être déclaré à son manager."}, {"id": "15_code_conduite#Alerte", "title": "Code de conduite", "section": "Alerte", "text": "Tout manquement au code de conduite peut être signalé de façon anonyme sur la plateforme d'alerte éthique, accessible 24 h sur 24."}, {"id": "16_depart#Préavis", "title": "Départ du Groupe", "section": "Préavis", "text": "Le préavis de démission est d'1 mois pour les employés et de 3 mois pour les cadres. Il peut être réduit d'un commun accord avec le manager."}, {"id": "16_depart#Entretien de sortie", "title": "Départ du Groupe", "section": "Entretien de sortie", "text": "Chaque collaborateur qui quitte le Groupe se voit proposer un entretien de sortie avec l'équipe People Experience, pour recueillir son retour sur son expérience."}, {"id": "16_depart#Réseau des anciens", "title": "Départ du Groupe", "section": "Réseau des anciens", "text": "Les anciens collaborateurs peuvent rejoindre le réseau Orvane Alumni pour garder le contact et être informés des offres d'emploi. Un ancien collaborateur peut être réembauché sans période d'essai s'il revient dans les 2 ans."}];
+const RESULTS=[{"retriever": "BM25", "recall@3": 0.9}, {"retriever": "TF-IDF", "recall@3": 0.9166666666666666}, {"retriever": "Dense (LSA)", "recall@3": 0.8666666666666667}, {"retriever": "Hybride (BM25 + TF-IDF + Dense (LSA))", "recall@3": 0.9166666666666666}];
+const EX=["Combien de jours par semaine puis-je télétravailler ?","Mon manager peut-il être mon mentor ?","Je viens au travail à vélo, ai-je une aide ?","Quel est le plafond pour une nuit d'hôtel à Paris ?","Quelle est la capitale de l'Australie ?"];
+const STOP=new Set("a au aux avec ce ces dans de des du elle en et eux il je la le les leur lui ma mais me même mes moi mon ne nos notre nous on ou par pas pour qu que qui sa se ses son sur ta te tes toi ton tu un une vos votre vous c d j l m n s t y été être est sont ai as avons avez ont suis es quoi quel quelle quels quelles combien comment quand où puis peux peut faut dois doit si plus ça cela faire fait avoir aller va dire demain".split(" "));
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const strip=s=>s.normalize("NFD").replace(/[̀-ͯ]/g,"");
+const stem=w=>{for(const suf of["issements","issement","ations","ation","ements","ement","ments","ment","ances","ance","euses","euse","eurs","eur","ités","ité","ives","ive","ifs","if","aux","al","ées","ée","és","er","ez","es","e","s"]){if(w.length-suf.length>=4&&w.endsWith(suf))return w.slice(0,-suf.length)}return w};
+const tok=t=>(t.toLowerCase().replace(/’/g,"'").match(/[a-zà-ÿ0-9]+/g)||[]).filter(w=>!STOP.has(w)&&w.length>1).map(w=>strip(stem(w)));
+const docs=CHUNKS.map(c=>tok(c.title+" "+c.section+" "+c.text));
+const N=docs.length,avg=docs.reduce((a,d)=>a+d.length,0)/N,df={};
+docs.forEach(d=>new Set(d).forEach(w=>df[w]=(df[w]||0)+1));
+const idf=w=>Math.log(1+(N-(df[w]||0)+.5)/((df[w]||0)+.5));
+const bm25=q=>docs.map(d=>{let s=0;const tf={};d.forEach(w=>tf[w]=(tf[w]||0)+1);for(const w of new Set(q)){const f=tf[w]||0;if(f)s+=idf(w)*f*2.5/(f+1.5*(.25+.75*d.length/avg))}return s});
+function answer(q,hits){
+  const qs=new Set(q);let c=[];
+  hits.forEach((h,i)=>h.c.text.split(/(?<=[.!?])\s+/).forEach(s=>{const sc=[...new Set(tok(s))].filter(w=>qs.has(w)).reduce((a,w)=>a+idf(w),0)-.3*i;c.push({sc,s,i})}));
+  c.sort((a,b)=>b.sc-a.sc);
+  if(!c.length||c[0].sc<1.8||hits[0].score<1.5)return null;
+  const same=c.slice(1).filter(x=>x.i===c[0].i&&x.sc>=.5*c[0].sc).slice(0,1);
+  return[c[0],...same];
+}
+let sample=null,ctrl=null;
+const META_LLM="Recherche BM25 dans le navigateur · réponse rédigée par une IA générative (Claude), uniquement à partir des 3 sources.";
+const META_EXT="Recherche BM25 dans le navigateur · réponse extractive : les phrases viennent mot pour mot des documents.";
+const NOANS="Je ne trouve pas cette information dans les documents RH. Contactez l'équipe People Experience.";
+const cite=t=>esc(t).replace(/\[(\d)\]/g,'<sup>[$1]</sup>');
+function prompt(text,hits){
+  return "Tu es CareerBot, l'assistant RH du Groupe Orvane.\nRéponds à la question en français, en 2 à 4 phrases claires, uniquement à partir des extraits ci-dessous.\nCite tes sources entre crochets, par exemple [1], juste après l'information qu'elles soutiennent.\nN'invente rien. Si les extraits ne contiennent pas la réponse, réponds exactement : « "+NOANS+" »\nRéponds en texte simple, sans titre ni liste.\n\nExtraits :\n"+hits.map((h,i)=>"["+(i+1)+"] "+h.c.title+" > "+h.c.section+" : "+h.c.text).join("\n")+"\n\nQuestion : "+text;
+}
+async function generate(text,hits,el){
+  if(ctrl)ctrl.abort();ctrl=new AbortController();const my=ctrl;
+  el.className='ans';el.textContent='Rédaction de la réponse…';
+  try{
+    const r=await sample(prompt(text,hits),{signal:my.signal,modelTier:'quick',onText:({text:t})=>{if(my===ctrl&&t&&t!=='Thinking...')el.innerHTML=cite(t)}});
+    if(my!==ctrl)return;
+    el.innerHTML=cite(r.text.trim());
+    if(r.text.includes('Je ne trouve pas'))el.className='ans no';
+  }catch(e){
+    if(my!==ctrl||e.name==='AbortError')return;
+    if(e.code==='not_granted'){sample=null;document.getElementById('meta').textContent=META_EXT;}
+    const a=answer(tok(text),hits);
+    if(a){el.className='ans';el.innerHTML=a.map(x=>esc(x.s)+`<sup>[${x.i+1}]</sup>`).join(' ');}
+    else{el.className='ans no';el.textContent=NOANS;}
+  }
+}
+function run(text){
+  const q=tok(text);const sc=bm25(q);
+  const hits=sc.map((score,i)=>({score,c:CHUNKS[i]})).sort((a,b)=>b.score-a.score).slice(0,3);
+  document.getElementById('qq').textContent=text;
+  const a=answer(q,hits),el=document.getElementById('ans');
+  if(!a&&hits[0].score<1.5){if(ctrl)ctrl.abort();ctrl=null;el.className='ans no';el.textContent=NOANS;}
+  else if(sample){generate(text,hits,el);}
+  else if(a){el.className='ans';el.innerHTML=a.map(x=>esc(x.s)+`<sup>[${x.i+1}]</sup>`).join(' ');}
+  else{el.className='ans no';el.textContent=NOANS;}
+  const mx=hits[0].score||1;
+  document.getElementById('src').innerHTML=hits.map((h,i)=>`<article class="s ${i===0&&a?'best':''}"><div class="h"><b><span class="n">[${i+1}]</span>${esc(h.c.title)} › ${esc(h.c.section)}</b><span class="sc">score ${h.score.toFixed(2)}</span></div><p>${esc(h.c.text)}</p><div class="bar"><div style="width:${Math.max(4,100*h.score/mx)}%"></div></div></article>`).join('');
+}
+document.getElementById('ex').innerHTML=EX.map((e,i)=>`<button type="button" data-i="${i}">${esc(e)}</button>`).join('');
+document.getElementById('ex').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const t=EX[+b.dataset.i];document.getElementById('qi').value=t;run(t)});
+document.getElementById('f').addEventListener('submit',e=>{e.preventDefault();const t=document.getElementById('qi').value.trim();if(t)run(t)});
+const best=Math.max(...RESULTS.map(r=>r["recall@3"]));
+document.getElementById('rows').innerHTML=RESULTS.map(r=>`<div class="row ${r["recall@3"]===best?'top3':''}"><span>${esc(r.retriever)}</span><div class="t"><div style="width:${(r["recall@3"]*100).toFixed(1)}%"></div></div><b>${Math.round(r["recall@3"]*100)} %</b></div>`).join('');
+document.getElementById('meta').textContent=META_EXT;
+document.getElementById('qi').value=EX[0];run(EX[0]);
+if(window.claude&&window.claude.use){window.claude.use('sample').then(s=>{if(!s)return;sample=s;document.getElementById('meta').textContent=META_LLM;}).catch(()=>{});}
+}
+</script>
+</body>
+</html>

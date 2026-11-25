@@ -1,0 +1,60 @@
+{"id": 1, "question": "Combien de jours par semaine je peux bosser de chez moi ?", "doc": "01_teletravail", "section": "Nombre de jours"}
+{"id": 2, "question": "Je travaille en boutique, est-ce que j'ai droit au télétravail ?", "doc": "01_teletravail", "section": "Éligibilité"}
+{"id": 3, "question": "Est-ce que l'entreprise rembourse ma connexion internet quand je suis à la maison ?", "doc": "01_teletravail", "section": "Indemnité"}
+{"id": 4, "question": "Qui paie mon fauteuil de bureau pour travailler à domicile ?", "doc": "01_teletravail", "section": "Indemnité"}
+{"id": 5, "question": "Mon manager peut-il refuser ma demande de travail à distance sans explication ?", "doc": "01_teletravail", "section": "Demande"}
+{"id": 6, "question": "Combien de jours de vacances j'accumule chaque mois ?", "doc": "02_conges", "section": "Congés payés"}
+{"id": 7, "question": "Que deviennent mes jours de RTT non utilisés en fin d'année ?", "doc": "02_conges", "section": "RTT"}
+{"id": 8, "question": "Comment financer un congé sabbatique avec mes jours mis de côté ?", "doc": "02_conges", "section": "Compte épargne-temps"}
+{"id": 9, "question": "Je me marie le mois prochain, ai-je des jours offerts ?", "doc": "02_conges", "section": "Absences pour événements familiaux"}
+{"id": 10, "question": "Combien de jours d'absence pour la naissance de mon bébé ?", "doc": "02_conges", "section": "Absences pour événements familiaux"}
+{"id": 11, "question": "Au bout de combien de temps puis-je changer de poste en interne ?", "doc": "03_mobilite_interne", "section": "Conditions"}
+{"id": 12, "question": "Dois-je demander la permission à mon chef pour candidater ailleurs dans le groupe ?", "doc": "03_mobilite_interne", "section": "Conditions"}
+{"id": 13, "question": "Est-ce que je garde mon ancienneté si je pars dans une autre entité du groupe ?", "doc": "03_mobilite_interne", "section": "Mobilité entre filiales"}
+{"id": 14, "question": "Qui paie le déménagement si je change de ville pour un nouveau poste ?", "doc": "03_mobilite_interne", "section": "Accompagnement"}
+{"id": 15, "question": "Les postes ouverts sont-ils d'abord proposés aux salariés ?", "doc": "03_mobilite_interne", "section": "Principe"}
+{"id": 16, "question": "Peut-on parler à quelqu'un pour préparer un changement de poste ?", "doc": "03_mobilite_interne", "section": "Accompagnement"}
+{"id": 17, "question": "Combien d'argent est versé sur mon CPF chaque année ?", "doc": "04_formation", "section": "Compte personnel de formation"}
+{"id": 18, "question": "Le groupe complète-t-il mon compte formation ?", "doc": "04_formation", "section": "Compte personnel de formation"}
+{"id": 19, "question": "Où trouver des cours en ligne sur l'intelligence artificielle ?", "doc": "04_formation", "section": "Orvane Academy"}
+{"id": 20, "question": "Combien d'heures de e-learning puis-je faire sur mon temps de travail ?", "doc": "04_formation", "section": "Orvane Academy"}
+{"id": 21, "question": "Est-ce que l'entreprise peut payer mon master ?", "doc": "04_formation", "section": "Formations diplômantes"}
+{"id": 22, "question": "Quand est décidé le programme des formations de l'année ?", "doc": "04_formation", "section": "Plan de formation"}
+{"id": 23, "question": "À quelle période ont lieu les évaluations de fin d'année ?", "doc": "05_entretien_annuel", "section": "Entretien annuel"}
+{"id": 24, "question": "Combien d'objectifs sont fixés pour l'année ?", "doc": "05_entretien_annuel", "section": "Entretien annuel"}
+{"id": 25, "question": "Quelle différence entre l'entretien pro et l'entretien annuel ?", "doc": "05_entretien_annuel", "section": "Entretien professionnel"}
+{"id": 26, "question": "Quels sont les niveaux de notation de la performance ?", "doc": "05_entretien_annuel", "section": "Évaluation"}
+{"id": 27, "question": "Combien de temps dure le programme d'accueil des nouveaux ?", "doc": "06_onboarding", "section": "Parcours d'intégration"}
+{"id": 28, "question": "Qui m'aide à comprendre la culture de l'entreprise quand j'arrive ?", "doc": "06_onboarding", "section": "Parrainage"}
+{"id": 29, "question": "C'est quoi le rapport d'étonnement ?", "doc": "06_onboarding", "section": "Rapport d'étonnement"}
+{"id": 30, "question": "Quand vais-je recevoir mon ordinateur avant de commencer ?", "doc": "06_onboarding", "section": "Avant l'arrivée"}
+{"id": 31, "question": "Combien de temps dure un mentorat ?", "doc": "07_mentorat", "section": "Durée et rythme"}
+{"id": 32, "question": "Quand puis-je m'inscrire pour avoir un mentor ?", "doc": "07_mentorat", "section": "Inscription"}
+{"id": 33, "question": "Faut-il beaucoup d'expérience pour accompagner quelqu'un comme mentor ?", "doc": "07_mentorat", "section": "Inscription"}
+{"id": 34, "question": "Mon responsable peut-il être mon mentor ?", "doc": "07_mentorat", "section": "Mise en relation"}
+{"id": 35, "question": "À quoi sert le programme de mentorat ?", "doc": "07_mentorat", "section": "Objectif"}
+{"id": 36, "question": "Comment rencontrer des collègues d'autres filiales pour échanger sur nos parcours ?", "doc": "08_reseau_interne", "section": "Cafés carrière"}
+{"id": 37, "question": "Peut-on parler de nos clients pendant un café carrière ?", "doc": "08_reseau_interne", "section": "Cafés carrière"}
+{"id": 38, "question": "Existe-t-il un groupe pour les jeunes de moins de 30 ans ?", "doc": "08_reseau_interne", "section": "Réseaux d'affinité"}
+{"id": 39, "question": "À quelle fréquence se retrouvent les communautés d'experts ?", "doc": "08_reseau_interne", "section": "Communautés métiers"}
+{"id": 40, "question": "Quand mon salaire est-il augmenté ?", "doc": "09_remuneration", "section": "Révision salariale"}
+{"id": 41, "question": "Quel est le montant maximum de mon bonus de cadre ?", "doc": "09_remuneration", "section": "Rémunération variable"}
+{"id": 42, "question": "Quelle part de la mutuelle est payée par l'employeur ?", "doc": "09_remuneration", "section": "Avantages"}
+{"id": 43, "question": "Je viens au travail à vélo, ai-je une aide ?", "doc": "09_remuneration", "section": "Transport"}
+{"id": 44, "question": "Quelle réduction ai-je sur les produits de la marque ?", "doc": "09_remuneration", "section": "Avantages"}
+{"id": 45, "question": "Dans quel délai dois-je envoyer mes justificatifs de dépenses ?", "doc": "10_notes_de_frais", "section": "Déclaration"}
+{"id": 46, "question": "Quel est le plafond pour une nuit d'hôtel à Paris ?", "doc": "10_notes_de_frais", "section": "Plafonds"}
+{"id": 47, "question": "Puis-je prendre l'avion pour un trajet de 3 heures ?", "doc": "10_notes_de_frais", "section": "Transport professionnel"}
+{"id": 48, "question": "Suis-je obligé de répondre aux mails le soir ?", "doc": "11_deconnexion", "section": "Principe"}
+{"id": 49, "question": "À partir de quelle heure ne doit-on plus envoyer d'e-mails ?", "doc": "11_deconnexion", "section": "Plages protégées"}
+{"id": 50, "question": "Combien de temps dure une réunion par défaut ?", "doc": "11_deconnexion", "section": "Réunions"}
+{"id": 51, "question": "Mon salaire est-il maintenu pendant mon congé maternité ?", "doc": "12_parentalite", "section": "Congé maternité et paternité"}
+{"id": 52, "question": "Puis-je reprendre à temps partiel après mon congé maternité ?", "doc": "12_parentalite", "section": "Retour de congé"}
+{"id": 53, "question": "Existe-t-il une aide pour la crèche ?", "doc": "12_parentalite", "section": "Garde d'enfants"}
+{"id": 54, "question": "À qui m'adresser pour adapter mon poste à mon handicap ?", "doc": "13_handicap", "section": "Référent handicap"}
+{"id": 55, "question": "Combien de jours pour mes démarches RQTH ?", "doc": "13_handicap", "section": "Jours d'absence"}
+{"id": 56, "question": "Combien de temps mes données sont-elles gardées après mon départ ?", "doc": "14_donnees_personnelles", "section": "Durée de conservation"}
+{"id": 57, "question": "Comment demander la suppression de mes données personnelles ?", "doc": "14_donnees_personnelles", "section": "Droits"}
+{"id": 58, "question": "Un fournisseur m'offre un cadeau de 150 euros, puis-je l'accepter ?", "doc": "15_code_conduite", "section": "Cadeaux"}
+{"id": 59, "question": "Quelle est la durée de préavis pour un cadre qui démissionne ?", "doc": "16_depart", "section": "Préavis"}
+{"id": 60, "question": "Si je reviens dans le groupe après l'avoir quitté, refais-je une période d'essai ?", "doc": "16_depart", "section": "Réseau des anciens"}
