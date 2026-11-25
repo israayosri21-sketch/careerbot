@@ -9,6 +9,7 @@ import json
 import os
 import re
 import unicodedata
+import urllib.error
 import urllib.request
 from dataclasses import dataclass
 from pathlib import Path
@@ -271,9 +272,14 @@ class MistralAPIGenerator:
         body = json.dumps({"model": self.model, "temperature": 0.1, "max_tokens": 400,
                            "messages": [{"role": "user", "content": PROMPT.format(context=build_context(hits), question=question)}]}).encode()
         req = urllib.request.Request("https://api.mistral.ai/v1/chat/completions", data=body,
-                                     headers={"Content-Type": "application/json", "Authorization": f"Bearer {self.api_key}"})
-        with urllib.request.urlopen(req, timeout=60) as r:
-            return json.loads(r.read())["choices"][0]["message"]["content"].strip()
+                                     headers={"Content-Type": "application/json", "Accept": "application/json",
+                                              "User-Agent": "careerbot-rh/1.0", "Authorization": f"Bearer {self.api_key}"})
+        try:
+            with urllib.request.urlopen(req, timeout=60) as r:
+                return json.loads(r.read())["choices"][0]["message"]["content"].strip()
+        except urllib.error.HTTPError as e:  # message lisible : code HTTP + début de la réponse de l'API
+            detail = e.read().decode("utf-8", "replace")[:200]
+            raise RuntimeError(f"API Mistral : erreur HTTP {e.code} {detail}") from None
 
 
 class ExtractiveGenerator:
@@ -296,7 +302,7 @@ class ExtractiveGenerator:
         for i, (c, _) in enumerate(hits, 1):
             for sent in re.split(r"(?<=[.!?])\s+", c.text):
                 score = sum(self.idf.get(w, 0) for w in q & set(tokenize(sent)))
-                cands.append((score - 0.3 * (i - 1), sent, i))
+                cands.append((score - 1.0 * (i - 1), sent, i))
         cands.sort(key=lambda x: -x[0])
         if not cands or cands[0][0] < min_score:
             return "Je ne trouve pas cette information dans les documents RH, contactez l'équipe People Experience."
@@ -321,14 +327,15 @@ class CareerBot:
 
     def ask(self, question: str, k: int = 3) -> dict:
         hits = self.retriever.search(question, k)
-        gen = self.generator
+        gen, error = self.generator, None
         try:
             answer = gen.answer(question, hits)
         except Exception as e:  # LLM injoignable ou quota dépassé : on retombe sur la réponse extractive
-            print(f"[info] {gen.name} indisponible ({type(e).__name__}), réponse extractive.")
+            error = str(e) or type(e).__name__
+            print(f"[info] {gen.name} indisponible ({error}), réponse extractive.")
             gen = self.extractive
             answer = gen.answer(question, hits)
-        return {"question": question, "answer": answer, "generator": gen.name,
+        return {"question": question, "answer": answer, "generator": gen.name, "llm_error": error,
                 "retriever": self.retriever.name,
                 "sources": [{"rank": i, "id": c.id, "title": c.title, "section": c.section, "text": c.text, "score": round(s, 4)}
                             for i, (c, s) in enumerate(hits, 1)]}

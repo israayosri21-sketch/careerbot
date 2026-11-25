@@ -63,6 +63,10 @@ if q:
     out = bot.ask(q, k)
     st.markdown(f"### Réponse\n{out['answer']}")
     st.caption(f"Recherche : {out['retriever']} · Génération : {out['generator']}")
+    if out.get("llm_error"):
+        st.warning(f"Le LLM n'a pas répondu, réponse extractive affichée. Détail : {out['llm_error']}")
+    elif out["generator"] == "Extractif" and not os.environ.get("MISTRAL_API_KEY"):
+        st.info("Aucune clé MISTRAL_API_KEY trouvée dans les Secrets : réponse extractive (sans LLM).")
     st.markdown("#### Sources")
     for s in out["sources"]:
         with st.expander(f"[{s['rank']}] {s['title']} › {s['section']}  (score {s['score']})", expanded=s["rank"] == 1):
